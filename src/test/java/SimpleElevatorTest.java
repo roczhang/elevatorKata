@@ -103,9 +103,34 @@ public class SimpleElevatorTest {
         assertPath(listner.getEventHistory(),new int[]{ 1,0,-1});
     }
 
+    @Test
+    public void testRun_elevatorChangeDirecction() throws Exception {
+
+        elevator.setFloor(1);
+        elevator.requestFloor(0,3);
+        elevator.run();
+        assertThat(elevator.getCurrentFloor(), is(3));
+        assertPath(listner.getEventHistory(),new int[]{ 1,0,1,2,3});
+
+    }
+
+
+    @Test
+    public void testRun_elevatorChangeDirecction2() throws Exception {
+
+        elevator.setFloor(1);
+        elevator.requestFloor(3,1);
+        elevator.run();
+        assertThat(elevator.getCurrentFloor(), is(1));
+        assertPath(listner.getEventHistory(),new int[]{ 1,2,3,2,1});
+
+    }
+
     private void assertPath(List<EventInfo> eventHistory, int[] expect) {
 
         int[] elevatorPath = eventHistory.stream().filter(e -> e.getEvent() == ElevatorEvent.ARRIVED).mapToInt(e -> e.getFloor()).toArray();
         assertThat(elevatorPath, is(expect));
     }
+    
+    
 }
