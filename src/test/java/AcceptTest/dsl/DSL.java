@@ -1,6 +1,8 @@
 package AcceptTest.dsl;
 
+import MockListner.MockListner;
 import elevator.SimpleElevator;
+import utility.AssertUtility;
 
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
@@ -11,7 +13,8 @@ import static org.junit.Assert.assertThat;
  */
 public class DSL {
 
-    private SimpleElevator elevator = new SimpleElevator(null);
+    private MockListner listener  = new MockListner();
+    private SimpleElevator elevator = new SimpleElevator(listener);
 
     public void givenElevetorOnFloor(int floor) {
 
@@ -30,6 +33,11 @@ public class DSL {
 
     public void thenFinalState(int floor) {
         assertThat(elevator.getCurrentFloor(), is(floor));
+    }
+
+    public void thenElevatorGoThroughPath(int[] expectPath) {
+
+        AssertUtility.assertPath( listener.getEventHistory(), expectPath);
     }
 }
 

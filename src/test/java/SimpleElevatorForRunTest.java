@@ -19,19 +19,9 @@ import static org.junit.Assert.assertThat;
  * Created by I076057 on 8/10/2017.
  */
 @RunWith(Parameterized.class)
-public class SimpleElevatorForRunTest {
+public class SimpleElevatorForRunTest extends ElevatorBaseTest {
 
 
-    SimpleElevator elevator;
-    ElevatorLister listner;
-    @Before
-    public void init() {
-
-        listner = new MockListner();
-        elevator = new SimpleElevator(listner);
-
-
-    }
 
     private int [] input;
     private int [] expect;
