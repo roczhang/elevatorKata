@@ -3,6 +3,9 @@ package elevator;
 import listner.ElevatorEvent;
 import listner.ElevatorLister;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created by I076057 on 8/10/2017.
  */
@@ -10,8 +13,8 @@ public class SimpleElevator {
 
     private final ElevatorLister listner;
     private int currentFloor;
-    private int fromFloor;
-    private int toFloor;
+    private List<Integer> fromFloor = new ArrayList<>();
+    private List<Integer> toFloor = new ArrayList<>();
 
 
     public SimpleElevator(ElevatorLister listner) {
@@ -25,34 +28,32 @@ public class SimpleElevator {
 
     public void requestFloor(int from, int to) {
 
-        this.fromFloor = from;
-        this.toFloor = to;
+        this.fromFloor.add(from);
+        this.toFloor.add(to);
 
     }
 
     public void run() {
 
 
-        if( this.fromFloor == this.toFloor){
-
-            gotoFloor(this.currentFloor, this.toFloor);
+        if (this.fromFloor.get(0).intValue() == this.toFloor.get(0)) {
+            gotoFloor(this.currentFloor, this.toFloor.get(0));
             return;
         }
 
-        gotoFloor(this.currentFloor, this.fromFloor);
-        this.currentFloor = this.fromFloor;
+        gotoFloor(this.currentFloor, this.fromFloor.get(0));
+        this.currentFloor = this.fromFloor.get(0);
 
-        boolean isUpper = fromFloor < toFloor;
-        if( isUpper){
-            currentFloor ++;
+        boolean isUpper = fromFloor.get(0) < toFloor.get(0);
+        if (isUpper) {
+            currentFloor++;
+        } else {
+            currentFloor--;
         }
-        else {
-            currentFloor --;
-        }
 
 
-        gotoFloor(this.currentFloor, this.toFloor);
-        this.currentFloor = this.toFloor;
+        gotoFloor(this.currentFloor, this.toFloor.get(0));
+        this.currentFloor = this.toFloor.get(0);
 
     }
 
@@ -72,9 +73,11 @@ public class SimpleElevator {
 
     }
 
-    private void fireEvent(ElevatorEvent arrived, int floor ) {
+    private void fireEvent(ElevatorEvent arrived, int floor) {
 
-        listner.notify(arrived, floor);
+        if (listner != null) {
+            listner.notify(arrived, floor);
+        }
     }
 
 
@@ -83,10 +86,10 @@ public class SimpleElevator {
     }
 
     public int getFromFloor() {
-        return fromFloor;
+        return fromFloor.get(0);
     }
 
     public int getToFloor() {
-        return toFloor;
+        return toFloor.get(0);
     }
 }

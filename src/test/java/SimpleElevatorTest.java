@@ -126,6 +126,21 @@ public class SimpleElevatorTest {
 
     }
 
+
+    @Test
+    public void testTwoPerson_from_the_direction() throws Exception {
+
+
+        elevator.setFloor(1);
+        elevator.requestFloor(1,1);
+        elevator.requestFloor(1,1);
+        elevator.run();
+        assertThat(elevator.getCurrentFloor(), is(1));
+        assertPath(listner.getEventHistory(),new int[]{ 1});
+
+
+    }
+
     private void assertPath(List<EventInfo> eventHistory, int[] expect) {
 
         int[] elevatorPath = eventHistory.stream().filter(e -> e.getEvent() == ElevatorEvent.ARRIVED).mapToInt(e -> e.getFloor()).toArray();

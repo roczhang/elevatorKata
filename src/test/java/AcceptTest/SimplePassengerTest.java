@@ -21,8 +21,7 @@ public class SimplePassengerTest {
         dsl.givenElevetorOnFloor(1);
         dsl.givenGotoFloor(1,1);
         dsl.whenElevatorRun();
-        dsl.thenElevatorDontStart(1);
-
+        dsl.thenFinalState(1);
     }
 
 
@@ -32,7 +31,7 @@ public class SimplePassengerTest {
         dsl.givenElevetorOnFloor(1);
         dsl.givenGotoFloor(1,-1);
         dsl.whenElevatorRun();
-        dsl.thenElevatorDontStart(1);
+        dsl.thenFinalState(-1);
 
     }
 
@@ -43,10 +42,41 @@ public class SimplePassengerTest {
         dsl.givenElevetorOnFloor(1);
         dsl.givenGotoFloor(1,1);
         dsl.whenElevatorRun();
-        dsl.thenElevatorDontStart(1);
+        dsl.thenFinalState(1);
 
     }
 
 
+    @Test
+    public void Passerge_and_elevator_on_different_floor_then_go_sameFloor() throws Exception {
+
+        dsl.givenElevetorOnFloor(1);
+        dsl.givenGotoFloor(2,1);
+        dsl.whenElevatorRun();
+        dsl.thenFinalState(1);
+
+    }
+
+
+    @Test
+    public void Passerge_and_elevator_on_different_floor_then_upstair() throws Exception {
+
+        dsl.givenElevetorOnFloor(1);
+        dsl.givenGotoFloor(2,5);
+        dsl.whenElevatorRun();
+        dsl.thenFinalState(5);
+
+    }
+
+
+    @Test
+    public void Passerge_and_elevator_on_different_floor_then_upstair_changeDirection() throws Exception {
+
+        dsl.givenElevetorOnFloor(1);
+        dsl.givenGotoFloor(-1,5);
+        dsl.whenElevatorRun();
+        dsl.thenFinalState(5);
+
+    }
 
 }

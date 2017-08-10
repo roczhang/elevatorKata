@@ -28,7 +28,7 @@ public class DSL {
         elevator.run();
     }
 
-    public void thenElevatorDontStart(int floor) {
+    public void thenFinalState(int floor) {
         assertThat(elevator.getCurrentFloor(), is(floor));
     }
 }
