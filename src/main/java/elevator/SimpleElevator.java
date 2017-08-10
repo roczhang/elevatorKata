@@ -32,8 +32,24 @@ public class SimpleElevator {
 
     public void run() {
 
+
+        if( this.fromFloor == this.toFloor){
+
+            gotoFloor(this.currentFloor, this.toFloor);
+            return;
+        }
+
         gotoFloor(this.currentFloor, this.fromFloor);
         this.currentFloor = this.fromFloor;
+
+        boolean isUpper = fromFloor < toFloor;
+        if( isUpper){
+            currentFloor ++;
+        }
+        else {
+            currentFloor --;
+        }
+
 
         gotoFloor(this.currentFloor, this.toFloor);
         this.currentFloor = this.toFloor;
@@ -41,15 +57,12 @@ public class SimpleElevator {
     }
 
     public void gotoFloor(int currentFloor, int floor) {
-        this.fireEvent(ElevatorEvent.ARRIVED, this);
+        this.fireEvent(ElevatorEvent.ARRIVED, currentFloor);
 
         if (currentFloor > floor) {
-
-            currentFloor++;
-
-        } else if (currentFloor < floor) {
-
             currentFloor--;
+        } else if (currentFloor < floor) {
+            currentFloor++;
         } else {
 
             return;
@@ -59,9 +72,9 @@ public class SimpleElevator {
 
     }
 
-    private void fireEvent(ElevatorEvent arrived, SimpleElevator elevator) {
+    private void fireEvent(ElevatorEvent arrived, int floor ) {
 
-        listner.notify(arrived, elevator);
+        listner.notify(arrived, floor);
     }
 
 

@@ -1,7 +1,6 @@
 package MockListner;
 
 import common.EventInfo;
-import elevator.SimpleElevator;
 import listner.ElevatorEvent;
 import listner.ElevatorLister;
 
@@ -15,9 +14,9 @@ public class MockListner implements ElevatorLister {
     private List<EventInfo> history = new ArrayList<>();
 
     @Override
-    public void notify(ElevatorEvent event, SimpleElevator elevator) {
+    public void notify(ElevatorEvent event, int floor) {
 
-        history.add( new EventInfo(event, elevator.getCurrentFloor()));
+        history.add( new EventInfo(event, floor));
     }
 
     @Override
