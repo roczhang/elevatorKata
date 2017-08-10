@@ -35,10 +35,8 @@ public class SimpleElevator {
         gotoFloor(this.currentFloor, this.fromFloor);
         this.currentFloor = this.fromFloor;
 
-
         gotoFloor(this.currentFloor, this.toFloor);
         this.currentFloor = this.toFloor;
-
 
     }
 

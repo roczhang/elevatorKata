@@ -45,23 +45,21 @@ public class SimpleElevatorTest {
     }
 
     @Test
-    public void testRun() throws Exception {
+    public void testRun_fromCurrentFLoorToSameFloor() throws Exception {
 
 
         elevator.setFloor(1);
         elevator.requestFloor(1, 1);
-
         elevator.run();
-
         assertThat(elevator.getCurrentFloor(), is(1));
-
-        List<EventInfo> eventistory = listner.getEventHistory();
-
-        int[] elevatorPath = eventistory.stream().filter(e -> e.getEvent() == ElevatorEvent.ARRIVED).mapToInt(e -> e.getFloor()).toArray();
+        assertPath(listner.getEventHistory(),new int[]{ 1,1});
 
 
-        assertThat(elevatorPath, is(new int[]{1,1}));
+    }
 
+    private void assertPath(List<EventInfo> eventHistory, int[] expect) {
 
+        int[] elevatorPath = eventHistory.stream().filter(e -> e.getEvent() == ElevatorEvent.ARRIVED).mapToInt(e -> e.getFloor()).toArray();
+        assertThat(elevatorPath, is(new int[]{1, 1}));
     }
 }
