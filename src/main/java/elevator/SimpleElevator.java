@@ -3,6 +3,7 @@ package elevator;
 import common.ElevatorDirection;
 import listner.ElevatorEvent;
 import listner.ElevatorLister;
+import utility.FindNearestElement;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -104,24 +105,27 @@ public class SimpleElevator {
 
         if (direction == ElevatorDirection.NONDIRCTION) {
 
-            int[] t = this.fromFloor.stream().distinct().sorted().mapToInt(e -> e).toArray();
 
-            int index = (int) Math.round(t.length * 1.0 / 2 + 0.5) - 1;
-            return t[index];
+            if( fromFloor.size() >0){
+                return  FindNearestElement.find(fromFloor.stream().mapToInt(e->e).toArray(), currentFloor);
+            }else{
+                return  FindNearestElement.find( toFloor.stream().mapToInt(e->e).toArray(), currentFloor);
+            }
 
         } else if (direction == ElevatorDirection.DOWN) {
 
             if (fromFloor.stream().anyMatch(e -> e < currentFloor)) {
 
-                return fromFloor.stream().distinct().filter(e -> e < currentFloor).mapToInt(e -> e).min().getAsInt();
+                return fromFloor.stream().distinct().filter(e -> e <= currentFloor).mapToInt(e -> e).min().getAsInt();
             } else {
                 return toFloor.stream().distinct().filter(e -> e <= currentFloor).mapToInt(e -> e).max().getAsInt();
             }
+
         } else {
 
             if (fromFloor.stream().anyMatch(e -> e > currentFloor)) {
 
-                return fromFloor.stream().distinct().filter(e -> e > currentFloor).mapToInt(e -> e).min().getAsInt();
+                return fromFloor.stream().distinct().filter(e -> e >= currentFloor).mapToInt(e -> e).min().getAsInt();
             } else {
                 return toFloor.stream().distinct()
                         .filter(e -> e >= currentFloor)

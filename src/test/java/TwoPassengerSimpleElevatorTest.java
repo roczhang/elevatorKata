@@ -62,9 +62,9 @@ public class TwoPassengerSimpleElevatorTest extends ElevatorBaseTest {
         elevator.requestFloor(1, 2);
         elevator.requestFloor(1, 3);
         elevator.run();
-        Assert.assertThat(elevator.getCurrentFloor(), is(3));
-        AssertUtility.assertPath(listner.getEventHistory(), new int[]{1, 2, 3});
 
+        AssertUtility.assertPath(listner.getEventHistory(), new int[]{1, 2, 3});
+        Assert.assertThat(elevator.getCurrentFloor(), is(3));
 
     }
 
