@@ -55,6 +55,9 @@ public class SimpleElevator {
             }
 
             int nextFloor = this.nextFloor(this.direction, this.currentFloor, this.fromFloor, this.toFloor);
+
+            System.out.printf("from %d --> %d \n", currentFloor, nextFloor);
+
             this.direction = getDirection(this.currentFloor, nextFloor);
 
             gotoFloor(this.currentFloor, nextFloor);
@@ -85,8 +88,8 @@ public class SimpleElevator {
 
         if (direction == ElevatorDirection.NONDIRCTION) {
 
-
-            direction = this.getDirection(currentFloor, this.toFloor.get(0));
+            int next = this.nextFloor(direction, currentFloor, this.fromFloor, this.toFloor);
+            direction = this.getDirection(currentFloor, next);
         }
     }
 
@@ -105,7 +108,6 @@ public class SimpleElevator {
 
         if (direction == ElevatorDirection.NONDIRCTION) {
 
-
             if( fromFloor.size() >0){
                 return  FindNearestElement.find(fromFloor.stream().mapToInt(e->e).toArray(), currentFloor);
             }else{
@@ -114,22 +116,22 @@ public class SimpleElevator {
 
         } else if (direction == ElevatorDirection.DOWN) {
 
-            if (fromFloor.stream().anyMatch(e -> e < currentFloor)) {
+            if (fromFloor.stream().anyMatch(e -> e <= currentFloor)) {
 
-                return fromFloor.stream().distinct().filter(e -> e <= currentFloor).mapToInt(e -> e).min().getAsInt();
+                return fromFloor.stream().distinct().filter(e -> e <= currentFloor).mapToInt(e -> e).max().getAsInt();
             } else {
                 return toFloor.stream().distinct().filter(e -> e <= currentFloor).mapToInt(e -> e).max().getAsInt();
             }
 
         } else {
 
-            if (fromFloor.stream().anyMatch(e -> e > currentFloor)) {
+            if (fromFloor.stream().anyMatch(e -> e >= currentFloor)) {
 
                 return fromFloor.stream().distinct().filter(e -> e >= currentFloor).mapToInt(e -> e).min().getAsInt();
             } else {
                 return toFloor.stream().distinct()
                         .filter(e -> e >= currentFloor)
-                        .mapToInt(e -> e).max().getAsInt();
+                        .mapToInt(e -> e).min().getAsInt();
 
             }
 

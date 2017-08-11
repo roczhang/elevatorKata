@@ -54,7 +54,7 @@ public class TwoPassengerSimpleElevatorTest extends ElevatorBaseTest {
 
     }
 
-    @Ignore
+    @Test
     public void testTwoPerson_from_the_direction_uppper() throws Exception {
 
 
