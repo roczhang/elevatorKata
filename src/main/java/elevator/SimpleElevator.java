@@ -93,7 +93,7 @@ public class SimpleElevator {
 
     public int nextFloor(ElevatorDirection direction, int currentFloor, List<Integer> fromFloor, List<Integer> toFloor) {
 
-        return FindNextStopFloor.find(direction, currentFloor, Convert.fromListtoArray(fromFloor), Convert.fromListtoArray(toFloor));
+        return FindNextStopFloor.find(direction, currentFloor, Convert.fromListToArray(fromFloor), Convert.fromListToArray(toFloor));
     }
 
     private boolean allRequestToSameFloor() {

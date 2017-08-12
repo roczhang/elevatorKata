@@ -20,14 +20,14 @@ import static org.hamcrest.MatcherAssert.assertThat;
 
     ;
 
-    private final String discription;
+    private final String description;
     private int expected;
     private int[] from;
     private int[] to;
 
     public FindNextStopFloorTest(String discription, int[] from, int[] to, int expected) {
 
-        this.discription = discription;
+        this.description = discription;
         this.from = from;
         this.to = to;
         this.expected = expected;

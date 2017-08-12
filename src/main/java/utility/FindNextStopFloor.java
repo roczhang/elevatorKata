@@ -18,23 +18,17 @@ public class FindNextStopFloor {
             } else {
                 return FindNearestElement.find(to, currentFloor);
             }
-        }
-        else if( direction == ElevatorDirection.UPPER)
-        {
-            if(Arrays.stream(from).anyMatch( e-> e>= currentFloor)){
-                return Arrays.stream(from).filter(e -> e>= currentFloor).min().getAsInt();
-            }else if( Arrays.stream(to).anyMatch( e->e>= currentFloor)){
-                return Arrays.stream(to).filter( e->e>= currentFloor).min().getAsInt();
+        } else if (direction == ElevatorDirection.UPPER) {
+            if (Arrays.stream(from).anyMatch(e -> e >= currentFloor)) {
+                return Arrays.stream(from).filter(e -> e >= currentFloor).min().getAsInt();
+            } else if (Arrays.stream(to).anyMatch(e -> e >= currentFloor)) {
+                return Arrays.stream(to).filter(e -> e >= currentFloor).min().getAsInt();
             }
-        }
-
-
-        else
-        {
-            if(Arrays.stream(from).anyMatch( e-> e<= currentFloor)){
-                return Arrays.stream(from).filter(e -> e<= currentFloor).max().getAsInt();
-            }else if( Arrays.stream(to).anyMatch(e->e<= currentFloor)){
-                return Arrays.stream(to).filter( e->e<= currentFloor).max().getAsInt();
+        } else {
+            if (Arrays.stream(from).anyMatch(e -> e <= currentFloor)) {
+                return Arrays.stream(from).filter(e -> e <= currentFloor).max().getAsInt();
+            } else if (Arrays.stream(to).anyMatch(e -> e <= currentFloor)) {
+                return Arrays.stream(to).filter(e -> e <= currentFloor).max().getAsInt();
             }
 
         }

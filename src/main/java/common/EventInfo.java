@@ -16,9 +16,9 @@ public class EventInfo {
     }
 
     public void setInfo(int floor) {
-
         this.floor = floor;
     }
+
     public int getFloor() {
         return floor;
     }
