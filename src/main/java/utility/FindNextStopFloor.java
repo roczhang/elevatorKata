@@ -1,6 +1,7 @@
 package utility;
 
 import common.ElevatorDirection;
+import common.NoRequestException;
 
 import java.util.Arrays;
 

@@ -18,7 +18,7 @@ public class TwoPassengerTest {
         dsl = new DSL();
     }
 
-    @Ignore
+    @Test
     public void twoPersonOnSameFloor_upstair() throws Exception {
 
         dsl.givenElevetorOnFloor(1);
