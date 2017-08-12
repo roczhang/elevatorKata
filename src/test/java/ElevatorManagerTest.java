@@ -8,14 +8,14 @@ import static org.hamcrest.core.Is.is;
 /**
  * Created by I076057 on 8/12/2017.
  */
-public class ElevatorManagerTest {
+public class ElevatorManagerTest extends ElevatorBaseTest {
 
     private ElevatorManger elevatorManager;
 
     @Before
-    public void init() throws Exception {
+    public void init() {
 
-        this.elevatorManager = new ElevatorManger();
+        this.elevatorManager = new ElevatorManger(elevator);
     }
 
     @Test

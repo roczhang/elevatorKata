@@ -18,7 +18,7 @@ public class DSL {
     Passenger passenger;
     private MockListner listener = new MockListner();
     private SimpleElevator elevator = new SimpleElevator(listener);
-    private ElevatorManger elevatorManager = new ElevatorManger();
+    private ElevatorManger elevatorManager = new ElevatorManger(elevator);
 
 
     public void givenElevetorOnFloor(int floor) {
