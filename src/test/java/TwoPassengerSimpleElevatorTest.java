@@ -1,11 +1,6 @@
 import org.junit.Assert;
-import org.junit.Ignore;
 import org.junit.Test;
-import org.omg.PortableInterceptor.INACTIVE;
 import utility.AssertUtility;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
@@ -21,7 +16,6 @@ public class TwoPassengerSimpleElevatorTest extends ElevatorBaseTest {
 
         elevator.requestFloor(1, 2);
         assertThat(elevator.hasRequest(), is(true));
-
     }
 
 
@@ -69,19 +63,18 @@ public class TwoPassengerSimpleElevatorTest extends ElevatorBaseTest {
     }
 
 
-
     @Test
     public void test_addElevatorRequest() throws Exception {
 
         Assert.assertThat(elevator.getFromFloors().size(), is(0));
         Assert.assertThat(elevator.getToFloors().size(), is(0));
 
-        elevator.requestFloor(1,2);
+        elevator.requestFloor(1, 2);
 
         Assert.assertThat(elevator.getFromFloors().size(), is(1));
         Assert.assertThat(elevator.getToFloors().size(), is(1));
 
-        elevator.requestFloor(1,2);
+        elevator.requestFloor(1, 2);
 
 
         Assert.assertThat(elevator.getFromFloors().size(), is(1));

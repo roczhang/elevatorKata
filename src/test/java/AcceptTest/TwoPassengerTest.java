@@ -18,8 +18,12 @@ public class TwoPassengerTest {
         dsl = new DSL();
     }
 
+
+
+
+
     @Test
-    public void twoPersonOnSameFloor_upstair() throws Exception {
+    public void twoPersonOnSameFloor_upstair() {
 
         dsl.givenElevetorOnFloor(1);
         dsl.givenGotoFloor(1,2);

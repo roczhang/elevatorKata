@@ -3,7 +3,7 @@ package elevator;
 import common.ElevatorDirection;
 import listner.ElevatorEvent;
 import listner.ElevatorLister;
-import utility.FindNearestElement;
+import utility.Convert;
 import utility.FindNextStopFloor;
 
 import java.util.ArrayList;
@@ -93,16 +93,7 @@ public class SimpleElevator {
 
     public int nextFloor(ElevatorDirection direction, int currentFloor, List<Integer> fromFloor, List<Integer> toFloor) {
 
-        return FindNextStopFloor.find(direction, currentFloor,this.convertArray(fromFloor), this.convertArray(toFloor));
-    }
-
-    private int[] convertArray(List<Integer> list) {
-
-        int [] result = new int[ list.size()];
-        for (int i = 0; i < list.size(); i++) {
-            result[i] = list.get(i);
-        }
-        return  result;
+        return FindNextStopFloor.find(direction, currentFloor, Convert.fromListtoArray(fromFloor), Convert.fromListtoArray(toFloor));
     }
 
     private boolean allRequestToSameFloor() {
