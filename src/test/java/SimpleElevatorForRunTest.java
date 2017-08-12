@@ -1,9 +1,5 @@
-import MockListner.MockListner;
 import common.EventInfo;
-import elevator.SimpleElevator;
 import listner.ElevatorEvent;
-import listner.ElevatorLister;
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
@@ -69,7 +65,7 @@ public class SimpleElevatorForRunTest extends ElevatorBaseTest {
 
     private void assertPath(List<EventInfo> eventHistory, int[] expect) {
 
-        int[] elevatorPath = eventHistory.stream().filter(e -> e.getEvent() == ElevatorEvent.ARRIVED).mapToInt(e -> e.getFloor()).toArray();
+        int[] elevatorPath = eventHistory.stream().filter(e -> e.getDirection() == ElevatorEvent.ARRIVED).mapToInt(e -> e.getFloor()).toArray();
         assertThat(elevatorPath, is(expect));
     }
 }

@@ -16,7 +16,7 @@ public class AssertUtility {
 
     public static void assertPath(List<EventInfo> eventHistory, int[] expect) {
 
-        int[] elevatorPath = eventHistory.stream().filter(e -> e.getEvent() == ElevatorEvent.ARRIVED).mapToInt(e -> e.getFloor()).toArray();
+        int[] elevatorPath = eventHistory.stream().filter(e -> e.getDirection() == ElevatorEvent.ARRIVED).mapToInt(e -> e.getFloor()).toArray();
         assertThat(elevatorPath, is(expect));
     }
 }

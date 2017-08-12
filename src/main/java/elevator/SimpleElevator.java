@@ -4,6 +4,7 @@ import common.ElevatorDirection;
 import listner.ElevatorEvent;
 import listner.ElevatorLister;
 import utility.FindNearestElement;
+import utility.FindNextStopFloor;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -92,43 +93,16 @@ public class SimpleElevator {
 
     public int nextFloor(ElevatorDirection direction, int currentFloor, List<Integer> fromFloor, List<Integer> toFloor) {
 
-        List<Integer> target = new ArrayList<>();
+        return FindNextStopFloor.find(direction, currentFloor,this.convertArray(fromFloor), this.convertArray(toFloor));
+    }
 
-        target.addAll(fromFloor);
-        target.addAll(toFloor);
+    private int[] convertArray(List<Integer> list) {
 
-        if (direction == ElevatorDirection.NONDIRCTION) {
-
-            if (fromFloor.size() > 0) {
-                return FindNearestElement.find(fromFloor.stream().mapToInt(e -> e).toArray(), currentFloor);
-            } else {
-                return FindNearestElement.find(toFloor.stream().mapToInt(e -> e).toArray(), currentFloor);
-            }
-
-        } else if (direction == ElevatorDirection.DOWN) {
-
-            if (fromFloor.stream().anyMatch(e -> e <= currentFloor)) {
-
-                return fromFloor.stream().distinct().filter(e -> e <= currentFloor).mapToInt(e -> e).max().getAsInt();
-            } else {
-                return toFloor.stream().distinct().filter(e -> e <= currentFloor).mapToInt(e -> e).max().getAsInt();
-            }
-
-        } else {
-
-            if (fromFloor.stream().anyMatch(e -> e >= currentFloor)) {
-
-                return fromFloor.stream().distinct().filter(e -> e >= currentFloor).mapToInt(e -> e).min().getAsInt();
-            } else {
-                return toFloor.stream().distinct()
-                        .filter(e -> e >= currentFloor)
-                        .mapToInt(e -> e).min().getAsInt();
-
-            }
-
+        int [] result = new int[ list.size()];
+        for (int i = 0; i < list.size(); i++) {
+            result[i] = list.get(i);
         }
-
-
+        return  result;
     }
 
     private boolean allRequestToSameFloor() {

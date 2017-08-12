@@ -9,24 +9,21 @@ public class EventInfo {
 
     private final ElevatorEvent event;
     private int floor;
-   // private EventDirection direction;
 
     public EventInfo(ElevatorEvent event, int floor) {
         this.event = event;
         this.floor = floor;
     }
 
-    public void  setInfo(int floor){
+    public void setInfo(int floor) {
 
         this.floor = floor;
     }
-
-
     public int getFloor() {
         return floor;
     }
 
-    public ElevatorEvent getEvent() {
+    public ElevatorEvent getDirection() {
         return event;
     }
 }
