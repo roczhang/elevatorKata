@@ -7,6 +7,7 @@ package passenger;
 public class Passenger {
 
 
+    private  String name;
     private int from;
     private int to;
     private boolean inElevator = false;
@@ -18,6 +19,12 @@ public class Passenger {
 
     public Passenger() {
         this(1, 1);
+    }
+
+    public Passenger(String name) {
+
+        this();
+        this.name = name;
     }
 
     public void setGoal(int from, int to) {
@@ -61,6 +68,11 @@ public class Passenger {
         } else {
             return !isUpperStair();
         }
+    }
+
+    public void requestElevator(ElevatorManger elevatorManager) {
+
+        elevatorManager.addRequestPassenger(this);
     }
 }
 
