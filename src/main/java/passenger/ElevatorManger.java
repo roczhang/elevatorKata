@@ -6,9 +6,7 @@ import listner.ElevatorEvent;
 import listner.ElevatorLister;
 
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
-import java.util.TreeSet;
 
 /**
  * Created by I076057 on 8/12/2017.
@@ -16,12 +14,32 @@ import java.util.TreeSet;
 public class ElevatorManger implements ElevatorLister {
 
     private final SimpleElevator elevator;
-    List<Passenger> passengerManger = new ArrayList<>();
+
+    private List<Passenger> passengerManger = new ArrayList<>();
     private List<Passenger> leavedPassenger = new ArrayList<>();
 
-    public ElevatorManger(SimpleElevator elevator){
+
+    public ElevatorManger(SimpleElevator elevator) {
         this.elevator = elevator;
     }
+
+    @Override
+    public void notify(ElevatorEvent event, int floor) {
+
+        this.enterElevator(floor);
+        this.LeaveElevator(floor);
+       // this.enterElevator(floor);
+    }
+
+    private void enterElevator(int floor) {
+
+        this.passengerManger.stream().filter(passenger -> passenger.getFrom() == floor)
+                .forEach(passenger -> {
+                     passenger.enterElevator();
+                });
+
+    }
+
 
     public void addRequestPassenger(Passenger passenger) {
         passengerManger.add(passenger);
@@ -31,39 +49,24 @@ public class ElevatorManger implements ElevatorLister {
         return passengerManger.size();
     }
 
-    public Passenger getLeavePerson() {
-        return passengerMangerg.get(0);
-    }
-
-    @Override
-    public void notify(ElevatorEvent event, int floor) {
-
-        this.LeaveElevator(floor);
-        this.InElevator(floor);
-    }
-
-    private void InElevator(int floor) {
-
-        this.passengerManger.stream().filter(passenger->passenger.getFrom() == floor)
-                .forEach( passenger -> {
-                    elevator.requestFromFloor(passenger.getTo());
-                    passenger.enterElevator();
-                });
-
+    public List<Passenger> getLeavePerson() {
+        return this.leavedPassenger;
     }
 
     private void LeaveElevator(int floor) {
 
-        this.passengerManger.stream().filter(passenger->passenger.isInElevator())
+        this.passengerManger.stream().filter(passenger -> passenger.isInElevator())
                 .filter(passenger -> passenger.getTo() == floor)
                 .forEach(passenger -> {
+                    passenger.leaveElevator();
                     this.leavedPassenger.add(passenger);
                 });
 
+        this.passengerManger.removeIf(passenger -> passenger.getTo() == floor);
     }
 
     @Override
     public List<EventInfo> getEventHistory() {
-        return null;
+        return this.getEventHistory();
     }
 }

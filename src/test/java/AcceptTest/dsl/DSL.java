@@ -19,6 +19,8 @@ public class DSL {
     private MockListner listener = new MockListner();
     private SimpleElevator elevator = new SimpleElevator(listener);
     private ElevatorManger elevatorManager = new ElevatorManger(elevator);
+    private Passenger Bob;
+    private Passenger Alice;
 
 
     public void givenElevetorOnFloor(int floor) {
@@ -47,9 +49,19 @@ public class DSL {
 
 
     public void give_Bob_request_Elevator_from_1_to1() {
-        passenger = new Passenger("Bob");
-        passenger.requestElevator(elevatorManager);
+        Bob = new Passenger("Bob",1,1);
+        Bob.requestElevator(elevatorManager);
     }
+
+
+
+    public void give_Alice_request_Elevator_from_1_to2() {
+
+        Alice = new Passenger("Alice",1,2);
+        Alice.requestElevator(elevatorManager);
+
+    }
+
 
     public void give_Elevator_on_First_Floor() {
 
@@ -58,14 +70,14 @@ public class DSL {
 
     public void thenBobLeaveElevator() {
 
-        assertThat(elevatorManager.getLeavePerson(), is(passenger));
+        assertThat(elevatorManager.getLeavePerson().get(0), is(Bob));
 
     }
 
-    public void give_Alice_request_Elevator_from_1_to2() {
-    }
 
     public void thenAliceLeaveElevator() {
+
+        assertThat(elevatorManager.getLeavePerson().get(1), is(Alice));
 
     }
 }
