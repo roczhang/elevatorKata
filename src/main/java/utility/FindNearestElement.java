@@ -7,10 +7,6 @@ public class FindNearestElement {
     public static int find(int[] input, int base) {
 
 
-        if (input.length == 1) return input[0];
-
-        if (input.length == 2) return new CustomerCompare(base).compare(input[0], input[1]) ? input[0] : input[1];
-
 
         CustomerCompare customerCompare = new CustomerCompare(base);
 
@@ -18,7 +14,7 @@ public class FindNearestElement {
 
             for (int j = i + 1; j < input.length; j++) {
 
-                if (customerCompare.compare(input[j], input[i])) {
+                if (customerCompare.compare(input[j], input[i])<0) {
                     int tmp = input[j];
                     input[j] = input[i];
                     input[i] = tmp;
@@ -26,6 +22,11 @@ public class FindNearestElement {
             }
         }
 
+        // assume that Upper stair than Down Stair if the are the same distance to the current floor
+        if( input.length >=2){
+            if( customerCompare.compare(input[0], input[1]) == 0)
+                return Math.max(input[0], input[1]);
+        }
 
         return input[0];
     }
@@ -41,8 +42,8 @@ class CustomerCompare {
         this.base = base;
     }
 
-    boolean compare(int x, int y) {
+    int compare(int x, int y) {
 
-        return Math.abs(x - base) < Math.abs(y - base);
+        return Math.abs(x - base) - Math.abs(y - base);
     }
 }

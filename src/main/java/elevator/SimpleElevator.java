@@ -48,29 +48,20 @@ public class SimpleElevator {
 
         while (hasRequest(this.fromFloor, this.toFloor)) {
 
-            if (this.allRequestToSameFloor()) {
-                gotoFloor(this.currentFloor, this.toFloor.get(0));
-                this.removeFloor(this.currentFloor);
-                return;
-            }
 
             int nextFloor = this.nextFloor(this.direction, this.currentFloor, this.fromFloor, this.toFloor);
-
-            System.out.printf("from %d --> %d \n", currentFloor, nextFloor);
-
             this.direction = getDirection(this.currentFloor, nextFloor);
 
             gotoFloor(this.currentFloor, nextFloor);
-
-
+            System.out.printf("from %d --> %d \n", currentFloor, nextFloor);
             this.currentFloor = nextFloor;
+
             this.removeFloor(currentFloor);
 
             if (!hasRequest()) {
                 break;
             }
             updateElevatorFunction();
-
             if (this.direction == ElevatorDirection.UPPER) {
                 currentFloor++;
             } else if (this.direction == ElevatorDirection.DOWN) {
@@ -108,10 +99,10 @@ public class SimpleElevator {
 
         if (direction == ElevatorDirection.NONDIRCTION) {
 
-            if( fromFloor.size() >0){
-                return  FindNearestElement.find(fromFloor.stream().mapToInt(e->e).toArray(), currentFloor);
-            }else{
-                return  FindNearestElement.find( toFloor.stream().mapToInt(e->e).toArray(), currentFloor);
+            if (fromFloor.size() > 0) {
+                return FindNearestElement.find(fromFloor.stream().mapToInt(e -> e).toArray(), currentFloor);
+            } else {
+                return FindNearestElement.find(toFloor.stream().mapToInt(e -> e).toArray(), currentFloor);
             }
 
         } else if (direction == ElevatorDirection.DOWN) {
