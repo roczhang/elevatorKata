@@ -23,7 +23,7 @@ public class EventInfo {
         return floor;
     }
 
-    public ElevatorEvent getDirection() {
+    public ElevatorEvent getEvent() {
         return event;
     }
 }

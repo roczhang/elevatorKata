@@ -5,6 +5,6 @@ package listner;
  */
 public enum  ElevatorEvent {
 
-    ARRIVED
+    ARRIVED,OPENDOOR,CLOSEDOOR
 
 }
