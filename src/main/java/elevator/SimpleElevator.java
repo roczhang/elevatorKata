@@ -14,15 +14,16 @@ import java.util.List;
  */
 public class SimpleElevator {
 
-    private final ElevatorLister listner;
     private int currentFloor;
     private List<Integer> fromFloor = new ArrayList<>();
     private List<Integer> toFloor = new ArrayList<>();
     private ElevatorDirection direction = ElevatorDirection.NONDIRCTION;
+    private List<ElevatorLister> listnerManager = new ArrayList<>();
 
 
     public SimpleElevator(ElevatorLister listner) {
-        this.listner = listner;
+
+        this.register(listner);
     }
 
     public void setFloor(int floor) {
@@ -166,12 +167,8 @@ public class SimpleElevator {
     }
 
     private void fireEvent(ElevatorEvent arrived, int floor) {
-
-        if (listner != null) {
-            listner.notify(arrived, floor);
-        }
+        this.listnerManager.forEach(listner -> listner.notify(arrived, floor));
     }
-
 
     public int getCurrentFloor() {
         return currentFloor;
@@ -199,5 +196,9 @@ public class SimpleElevator {
 
     public List<Integer> getToFloors() {
         return this.toFloor;
+    }
+
+    public void register(ElevatorLister listner) {
+        this.listnerManager.add(listner);
     }
 }

@@ -13,7 +13,7 @@ public class ElevatorBaseTest {
     ElevatorLister listner;
 
     @Before
-    public void init() {
+    public void baseInit() {
 
         listner = new MockListner();
         elevator = new SimpleElevator(listner);

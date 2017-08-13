@@ -31,6 +31,21 @@ public class ElevatorManagerTest extends ElevatorBaseTest {
         assertThat(elevatorManager.size(), is(0));
         elevatorManager.addRequestPassenger(Bob);
         assertThat(elevatorManager.size(), is(1));
+
+        elevatorManager.addRequestPassenger(Alice);
+        assertThat(elevatorManager.size(), is(2));
+    }
+
+
+
+    @Test
+    public void test_addPassenger_one_usr_only_one_time() throws Exception {
+        elevatorManager.addRequestPassenger(Bob);
+        assertThat(elevatorManager.size(), is(1));
+
+
+        elevatorManager.addRequestPassenger(Bob);
+        assertThat(elevatorManager.size(), is(1));
     }
 
     @Test
@@ -65,4 +80,16 @@ public class ElevatorManagerTest extends ElevatorBaseTest {
         assertThat(elevatorManager.getLeavePerson().get(1), is(Alice ));
     }
 
+
+    @Test
+    public void test_run_elevator() throws Exception {
+
+        elevatorManager.setFloor(1);
+        Bob.requestElevator(elevatorManager);
+        elevatorManager.start();
+
+        assertThat( elevatorManager.size(), is(0));
+        assertThat(  elevatorManager.getLeavePerson().size(), is(1));
+        assertThat(  elevatorManager.getLeavePerson().get(0), is(Bob));
+    }
 }

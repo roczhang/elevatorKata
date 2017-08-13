@@ -16,17 +16,14 @@ import static org.junit.Assert.assertThat;
 public class DSL {
 
     Passenger passenger;
+
     private MockListner listener = new MockListner();
     private SimpleElevator elevator = new SimpleElevator(listener);
-    private ElevatorManger elevatorManager = new ElevatorManger(elevator);
+    private ElevatorManger elevatorManager = new ElevatorManger(new SimpleElevator(listener));
     private Passenger Bob;
     private Passenger Alice;
 
 
-    public void givenElevetorOnFloor(int floor) {
-
-        elevator.setFloor(floor);
-    }
 
     public void givenGotoFloor(int from, int to) {
 
@@ -48,38 +45,10 @@ public class DSL {
     }
 
 
-    public void give_Bob_request_Elevator_from_1_to1() {
-        Bob = new Passenger("Bob",1,1);
-        Bob.requestElevator(elevatorManager);
-    }
-
-
-
-    public void give_Alice_request_Elevator_from_1_to2() {
-
-        Alice = new Passenger("Alice",1,2);
-        Alice.requestElevator(elevatorManager);
-
-    }
-
-
-    public void give_Elevator_on_First_Floor() {
-
+    public void givenElevetorOnFloor(int floor) {
         elevator.setFloor(1);
     }
-
-    public void thenBobLeaveElevator() {
-
-        assertThat(elevatorManager.getLeavePerson().get(0), is(Bob));
-
-    }
-
-
-    public void thenAliceLeaveElevator() {
-
-        assertThat(elevatorManager.getLeavePerson().get(1), is(Alice));
-
-    }
 }
+
 
 

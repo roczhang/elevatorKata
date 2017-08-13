@@ -18,9 +18,21 @@ public class ElevatorManger implements ElevatorLister {
     private List<Passenger> passengerManger = new ArrayList<>();
     private List<Passenger> leavedPassenger = new ArrayList<>();
 
-
     public ElevatorManger(SimpleElevator elevator) {
         this.elevator = elevator;
+        elevator.register(this);
+    }
+
+    public void addRequestPassenger(Passenger passenger) {
+
+        if (!passengerManger.contains(passenger)) {
+            passengerManger.add(passenger);
+            elevator.requestFromFloor( passenger.getFrom());
+        }
+    }
+
+    public void start() {
+        this.elevator.run();
     }
 
     @Override
@@ -28,30 +40,20 @@ public class ElevatorManger implements ElevatorLister {
 
         this.enterElevator(floor);
         this.LeaveElevator(floor);
-       // this.enterElevator(floor);
+        // this.enterElevator(floor);
     }
 
     private void enterElevator(int floor) {
 
         this.passengerManger.stream().filter(passenger -> passenger.getFrom() == floor)
+
                 .forEach(passenger -> {
-                     passenger.enterElevator();
+                    passenger.enterElevator();
+                    elevator.requestTo(passenger.getTo());
                 });
 
     }
 
-
-    public void addRequestPassenger(Passenger passenger) {
-        passengerManger.add(passenger);
-    }
-
-    public int size() {
-        return passengerManger.size();
-    }
-
-    public List<Passenger> getLeavePerson() {
-        return this.leavedPassenger;
-    }
 
     private void LeaveElevator(int floor) {
 
@@ -65,8 +67,25 @@ public class ElevatorManger implements ElevatorLister {
         this.passengerManger.removeIf(passenger -> passenger.getTo() == floor);
     }
 
+    public void setFloor(int floor) {
+        elevator.setFloor(floor);
+    }
+
+
+    public int size() {
+        return passengerManger.size();
+    }
+
+    public List<Passenger> getLeavePerson() {
+        return this.leavedPassenger;
+    }
+
+
+
+
     @Override
     public List<EventInfo> getEventHistory() {
         return this.getEventHistory();
     }
+
 }
