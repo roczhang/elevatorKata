@@ -16,13 +16,15 @@ import java.util.stream.Collectors;
  */
 public class SimpleElevator {
 
-    private int currentFloor;
+
     private List<Integer> fromFloor = new ArrayList<>();
     private List<Integer> toFloor = new ArrayList<>();
-    private ElevatorDirection direction = ElevatorDirection.NONDIRCTION;
-    private List<ElevatorLister> listnerManager = new ArrayList<>();
-    private List<Passenger> passengerManager;
 
+    private int currentFloor;
+    private ElevatorDirection direction = ElevatorDirection.NONDIRCTION;
+
+    private List<Passenger> passengerManager;
+    private List<ElevatorLister> listnerManager = new ArrayList<>();
 
     public SimpleElevator(ElevatorLister listner) {
 
@@ -47,41 +49,23 @@ public class SimpleElevator {
         }
     }
 
-
     public void run() {
 
-        while (hasRequest(this.fromFloor, this.toFloor)) {
-
+        while (this.hasRequest()) {
 
             this.fireEvent(ElevatorEvent.ARRIVED, currentFloor);
 
-
-            List<Integer> waitingPassenger = null;
-            if (this.passengerManager != null) {
-
-                waitingPassenger = this.passengerManager.stream()
-                        .filter(passenger -> !passenger.isInElevator())
-                        //.filter(passenge -> passenge.getFrom() == this.currentFloor)
-                        .map(passenger -> passenger.getFrom())
-                        .collect(Collectors.toList());
-
-            }
-            if (waitingPassenger == null) {
-                waitingPassenger = new ArrayList<>();
-            }
-
-            waitingPassenger.addAll(fromFloor);
-
-            int nextFloor = this.nextFloor(this.direction, this.currentFloor, waitingPassenger, this.toFloor);
+            List<Integer> waitingPassengerRequest = getRequestFromPassengerOutSideOfElevator();
+            List<Integer> inSidePassengerRequest = getRequestFromPassengerInsideOfElevator();
+            int nextFloor = this.nextFloor(this.direction, this.currentFloor, waitingPassengerRequest, inSidePassengerRequest);
             this.direction = getDirection(this.currentFloor, nextFloor);
 
             gotoFloor(this.currentFloor, nextFloor);
-            System.out.printf("from %d --> %d \n", currentFloor, nextFloor);
             this.currentFloor = nextFloor;
 
             this.removeFloor(currentFloor);
 
-            if (!hasRequest()) {
+            if (!this.hasRequest()) {
                 break;
             }
             updateElevatorFunction();
@@ -91,6 +75,45 @@ public class SimpleElevator {
                 currentFloor--;
             }
         }
+    }
+
+    private List<Integer> getRequestFromPassengerOutSideOfElevator() {
+        List<Integer> waitingPassenger = null;
+        if (this.passengerManager != null) {
+
+            waitingPassenger = this.passengerManager.stream()
+                    .filter(passenger -> !passenger.isInElevator())
+                    //.filter(passenge -> passenge.getFrom() == this.currentFloor)
+                    .map(passenger -> passenger.getFrom())
+                    .collect(Collectors.toList());
+
+        }
+        if (waitingPassenger == null) {
+            waitingPassenger = new ArrayList<>();
+        }
+
+        waitingPassenger.addAll(fromFloor);
+        return waitingPassenger;
+    }
+
+    public List<Integer> getRequestFromPassengerInsideOfElevator() {
+        //return this.toFloor;
+
+        List<Integer>  insideRequst = null;
+        if (this.passengerManager != null) {
+
+            insideRequst =  this.passengerManager.stream()
+                    .filter(passenger -> passenger.isInElevator())
+                    .map(passenger -> passenger.getTo())
+                    .collect(Collectors.toList());
+        }
+        if (this.passengerManager == null) {
+            insideRequst = new ArrayList<>();
+        }
+
+        insideRequst.addAll(toFloor);
+
+        return insideRequst.stream().distinct().collect(Collectors.toList());
     }
 
     private void updateElevatorFunction() {
@@ -118,12 +141,6 @@ public class SimpleElevator {
         return FindNextStopFloor.find(direction, currentFloor, Convert.fromListToArray(fromFloor), Convert.fromListToArray(toFloor));
     }
 
-    private boolean allRequestToSameFloor() {
-
-        return this.fromFloor.stream().distinct().count() == 1 &&
-                this.toFloor.stream().distinct().count() == 1 &&
-                this.toFloor.get(0) == this.fromFloor.get(0);
-    }
 
     private ElevatorDirection changeDirection(ElevatorDirection direction) {
         if (direction == ElevatorDirection.UPPER) return ElevatorDirection.DOWN;
@@ -232,4 +249,6 @@ public class SimpleElevator {
     public void setPassengerManager(List<Passenger> passengerManager) {
         this.passengerManager = passengerManager;
     }
+
+
 }
