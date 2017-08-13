@@ -40,7 +40,7 @@ public class ElevatorManger implements ElevatorLister {
 
         this.enterElevator(floor);
         this.LeaveElevator(floor);
-        // this.enterElevator(floor);
+        //this.enterElevator(floor);
     }
 
     private void enterElevator(int floor) {

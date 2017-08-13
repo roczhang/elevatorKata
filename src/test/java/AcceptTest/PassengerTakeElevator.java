@@ -38,4 +38,5 @@ public class PassengerTakeElevator {
         dsl.then_Bob_Leave_Elevator_on_floor1();
         dsl.then_Alice_Leave_Elevator_on_floor2();
     }
+
 }
