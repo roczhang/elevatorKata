@@ -1,7 +1,7 @@
 import listner.ElevatorEvent;
 import org.junit.Before;
 import org.junit.Test;
-import passenger.ElevatorManger;
+import passenger.ElevatorController;
 import passenger.Passenger;
 import utility.AssertUtility;
 
@@ -18,11 +18,11 @@ public class ElevatorManagerTest extends ElevatorBaseTest {
     Passenger Bob;
     Passenger Alice;
 
-    private ElevatorManger elevatorManager;
+    private ElevatorController elevatorManager;
 
     @Before
     public void init() {
-        this.elevatorManager = new ElevatorManger(elevator);
+        this.elevatorManager = new ElevatorController(elevator);
         this.Bob = new Passenger("Bob", 1, 1);
         this.Alice = new Passenger("Alice", 1,2);
     }

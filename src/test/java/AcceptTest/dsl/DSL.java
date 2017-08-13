@@ -1,8 +1,9 @@
 package AcceptTest.dsl;
 
 import MockListner.MockListner;
+import elevator.Elevator;
 import elevator.SimpleElevator;
-import passenger.ElevatorManger;
+import passenger.ElevatorController;
 import passenger.Passenger;
 import utility.AssertUtility;
 
@@ -18,8 +19,8 @@ public class DSL {
     Passenger passenger;
 
     private MockListner listener = new MockListner();
-    private SimpleElevator elevator = new SimpleElevator(listener);
-    private ElevatorManger elevatorManager = new ElevatorManger(new SimpleElevator(listener));
+    private Elevator elevator = new SimpleElevator(listener);
+    private ElevatorController elevatorManager = new ElevatorController(elevator);
     private Passenger Bob;
     private Passenger Alice;
 

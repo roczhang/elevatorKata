@@ -3,6 +3,7 @@ package elevator;
 import common.ElevatorDirection;
 import listner.ElevatorEvent;
 import listner.ElevatorLister;
+import passenger.ElevatorController;
 import passenger.Passenger;
 import utility.Convert;
 import utility.FindNextStopFloor;
@@ -14,7 +15,9 @@ import java.util.stream.Collectors;
 /**
  * Created by I076057 on 8/10/2017.
  */
-public class SimpleElevator {
+
+
+public class SimpleElevator implements  Elevator {
 
 
     private List<Integer> fromFloor = new ArrayList<>();
@@ -40,6 +43,15 @@ public class SimpleElevator {
 
         this.addRequest(this.fromFloor, from);
         this.addRequest(this.toFloor, to);
+    }
+
+    public void register(ElevatorLister listner) {
+        this.listnerManager.add(listner);
+    }
+
+
+    public void setPassengerManager(List<Passenger> passengerManager) {
+        this.passengerManager = passengerManager;
     }
 
     private void addRequest(List<Integer> request, int newOne) {
@@ -97,7 +109,6 @@ public class SimpleElevator {
     }
 
     public List<Integer> getRequestFromPassengerInsideOfElevator() {
-        //return this.toFloor;
 
         List<Integer>  insideRequst = null;
         if (this.passengerManager != null) {
@@ -185,7 +196,7 @@ public class SimpleElevator {
 
     public boolean hasRequest(List<Integer> fromFloor, List<Integer> toFloor) {
 
-        if (this.passengerManager != null) {
+        if (this.passengerManager != null && this.passengerManager.size() > 0) {
             return this.passengerManager.size() > 0;
         } else {
             return fromFloor.size() > 0 || toFloor.size() > 0;
@@ -240,14 +251,6 @@ public class SimpleElevator {
 
     public List<Integer> getToFloors() {
         return this.toFloor;
-    }
-
-    public void register(ElevatorLister listner) {
-        this.listnerManager.add(listner);
-    }
-
-    public void setPassengerManager(List<Passenger> passengerManager) {
-        this.passengerManager = passengerManager;
     }
 
 

@@ -1,7 +1,7 @@
 package passenger;
 
 import common.EventInfo;
-import elevator.SimpleElevator;
+import elevator.Elevator;
 import listner.ElevatorEvent;
 import listner.ElevatorLister;
 
@@ -11,38 +11,34 @@ import java.util.List;
 /**
  * Created by I076057 on 8/12/2017.
  */
-public class ElevatorManger implements ElevatorLister {
+public class ElevatorController implements ElevatorLister {
 
-    private final SimpleElevator elevator;
+    private final Elevator elevator;
     private int weightLimitation;
 
     private List<Passenger> passengerManger = new ArrayList<>();
     private List<Passenger> leavedPassenger = new ArrayList<>();
 
 
-    public ElevatorManger(SimpleElevator elevator) {
+    public ElevatorController(Elevator elevator) {
         this.elevator = elevator;
         elevator.register(this);
         elevator.setPassengerManager(passengerManger);
         this.weightLimitation = 150;
     }
 
+    public void setFloor(int floor) {
+        elevator.setFloor(floor);
+    }
+
+    public void setWeightLimitation(int weightLimitation) {
+        this.weightLimitation = weightLimitation;
+    }
+
     public void addRequestPassenger(Passenger passenger) {
 
         if (!passengerManger.contains(passenger)) {
             passengerManger.add(passenger);
-
-
-//            int currentWeight = this.passengerManger.stream()
-//                    .filter( e->e.isInElevator())
-//                    .map(e -> e.getWeight())
-//                    .reduce(0, (a, b) -> a + b);
-//
-//            if (currentWeight + passenger.getWeight() <= this.weightLimitation){
-//
-//                elevator.requestFromFloor(passenger.getFrom());
-//            }
-
         }
     }
 
@@ -55,13 +51,13 @@ public class ElevatorManger implements ElevatorLister {
 
         this.enterElevator(floor);
         this.LeaveElevator(floor);
-        //this.enterElevator(floor);
     }
 
     private void enterElevator(int floor) {
 
-        this.passengerManger.stream().filter(passenger -> passenger.getFrom() == floor)
-                .filter(passenger -> !passenger.isInElevator())
+        this.passengerManger.stream()
+                .filter(passenger -> passenger.isOutElevator())
+                .filter(passenger -> passenger.getFrom() == floor)
                 .forEach(passenger -> {
 
                     int currentWeight = getWeightOnPassengerInFloor(passengerManger);
@@ -71,13 +67,6 @@ public class ElevatorManger implements ElevatorLister {
                     }
 
                 });
-
-//        this.passengerManger.stream().filter(passenger -> passenger.getFrom() == floor)
-//
-//                .forEach(passenger -> {
-//                    passenger.enterElevator();
-//                    elevator.requestTo(passenger.getTo());
-//                });
 
     }
 
@@ -93,7 +82,7 @@ public class ElevatorManger implements ElevatorLister {
                     offElevatorPassenger.add(passenger);
                 });
 
-        offElevatorPassenger.forEach( passenger -> this.passengerManger.remove(passenger));
+        offElevatorPassenger.forEach(passenger -> this.passengerManger.remove(passenger));
     }
 
     private int getWeightOnPassengerInFloor(List<Passenger> passengerManger) {
@@ -102,16 +91,6 @@ public class ElevatorManger implements ElevatorLister {
                 .map(passenger -> passenger.getWeight())
                 .reduce(0, (a, b) -> a + b);
 
-    }
-
-    private void getWaitingPassengerFromOutsideOfElevator(int floor) {
-        Object[] waitingList = this.passengerManger.stream().filter(passenger -> passenger.getFrom() == floor)
-                .filter(passenger -> !passenger.isInElevator()).toArray();
-    }
-
-
-    public void setFloor(int floor) {
-        elevator.setFloor(floor);
     }
 
 
@@ -129,7 +108,4 @@ public class ElevatorManger implements ElevatorLister {
         return this.getEventHistory();
     }
 
-    public void setWeightLimitation(int weightLimitation) {
-        this.weightLimitation = weightLimitation;
-    }
 }

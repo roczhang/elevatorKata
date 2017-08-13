@@ -39,7 +39,7 @@ public class Passenger {
         this.to = to;
     }
 
-    public void requestElevator(ElevatorManger elevatorManager) {
+    public void requestElevator(ElevatorController elevatorManager) {
 
         elevatorManager.addRequestPassenger(this);
     }
@@ -67,6 +67,10 @@ public class Passenger {
 
     public int getWeight() {
         return weight;
+    }
+
+    public boolean isOutElevator() {
+        return !this.isInElevator();
     }
 }
 
