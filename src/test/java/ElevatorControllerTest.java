@@ -13,7 +13,7 @@ import static org.hamcrest.core.Is.is;
 /**
  * Created by I076057 on 8/12/2017.
  */
-public class ElevatorManagerTest extends ElevatorBaseTest {
+public class ElevatorControllerTest extends ElevatorBaseTest {
 
     Passenger Bob;
     Passenger Alice;
