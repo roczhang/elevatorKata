@@ -11,17 +11,15 @@ import java.util.List;
  */
 public interface Elevator {
 
-    void register(ElevatorLister elevatorController);
 
+    void register(ElevatorLister listener);
     void setPassengerManager(List<Passenger> passengerManger);
 
     void setFloor(int floor);
+    int getCurrentFloor();
 
     void run();
 
-    int getCurrentFloor();
-
     void requestFloor(int from, int to);
-
     void requestTo(int to);
 }
