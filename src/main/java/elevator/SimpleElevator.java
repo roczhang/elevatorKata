@@ -9,6 +9,7 @@ import utility.FindNextStopFloor;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Created by I076057 on 8/10/2017.
@@ -52,7 +53,26 @@ public class SimpleElevator {
         while (hasRequest(this.fromFloor, this.toFloor)) {
 
 
-            int nextFloor = this.nextFloor(this.direction, this.currentFloor, this.fromFloor, this.toFloor);
+            this.fireEvent(ElevatorEvent.ARRIVED, currentFloor);
+
+
+            List<Integer> waitingPassenger = null;
+            if (this.passengerManager != null) {
+
+                waitingPassenger = this.passengerManager.stream()
+                        .filter(passenger -> !passenger.isInElevator())
+                        //.filter(passenge -> passenge.getFrom() == this.currentFloor)
+                        .map(passenger -> passenger.getFrom())
+                        .collect(Collectors.toList());
+
+            }
+            if (waitingPassenger == null) {
+                waitingPassenger = new ArrayList<>();
+            }
+
+            waitingPassenger.addAll(fromFloor);
+
+            int nextFloor = this.nextFloor(this.direction, this.currentFloor, waitingPassenger, this.toFloor);
             this.direction = getDirection(this.currentFloor, nextFloor);
 
             gotoFloor(this.currentFloor, nextFloor);
@@ -148,20 +168,26 @@ public class SimpleElevator {
 
     public boolean hasRequest(List<Integer> fromFloor, List<Integer> toFloor) {
 
-        return fromFloor.size() > 0 || toFloor.size() > 0 ;
+        if (this.passengerManager != null) {
+            return this.passengerManager.size() > 0;
+        } else {
+            return fromFloor.size() > 0 || toFloor.size() > 0;
+        }
     }
 
     public void gotoFloor(int currentFloor, int floor) {
-        this.fireEvent(ElevatorEvent.ARRIVED, currentFloor);
+
+        if (currentFloor == floor)
+            return;
 
         if (currentFloor > floor) {
             currentFloor--;
         } else if (currentFloor < floor) {
             currentFloor++;
-        } else {
-
-            return;
         }
+
+        this.fireEvent(ElevatorEvent.ARRIVED, currentFloor);
+
 
         this.gotoFloor(currentFloor, floor);
 

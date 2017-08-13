@@ -75,7 +75,7 @@ public class DSL2 {
 
     public void then_elevator_go_throgh_Floor_1_2_3_2_1_2() {
 
-        int[] path = {1, 2, 3, 2, 1, 1, 2};
+        int[] path = {1, 2, 3, 2,  1, 2};
         AssertUtility.assertPath(listner.getEventHistory(), path);
     }
 

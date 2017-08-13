@@ -3,6 +3,7 @@ import org.junit.Before;
 import org.junit.Test;
 import passenger.ElevatorManger;
 import passenger.Passenger;
+import utility.AssertUtility;
 
 import java.util.ArrayList;
 
@@ -91,5 +92,29 @@ public class ElevatorManagerTest extends ElevatorBaseTest {
         assertThat( elevatorManager.size(), is(0));
         assertThat(  elevatorManager.getLeavePerson().size(), is(1));
         assertThat(  elevatorManager.getLeavePerson().get(0), is(Bob));
+
+    }
+
+    @Test
+    public void test_overWightlimitation() throws Exception {
+
+        elevatorManager.setFloor(1);
+        Bob =  new Passenger("Bob", 1,3,60);
+        Bob.requestElevator(elevatorManager);
+
+        Alice = new Passenger("Alice", 1,2, 100);
+        Alice.requestElevator(elevatorManager);
+
+        elevatorManager.start();
+
+        assertThat( elevatorManager.size(), is(0));
+
+        int[] path = {1, 2, 3, 2,  1, 2};
+        AssertUtility.assertPath(listner.getEventHistory(), path);
+
+        assertThat(  elevatorManager.getLeavePerson().size(), is(2));
+        assertThat(  elevatorManager.getLeavePerson().contains(Bob), is(true));
+        assertThat(  elevatorManager.getLeavePerson().contains(Alice), is( true));
+
     }
 }
