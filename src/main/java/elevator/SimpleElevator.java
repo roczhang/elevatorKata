@@ -3,6 +3,7 @@ package elevator;
 import common.ElevatorDirection;
 import listner.ElevatorEvent;
 import listner.ElevatorLister;
+import passenger.Passenger;
 import utility.Convert;
 import utility.FindNextStopFloor;
 
@@ -19,6 +20,7 @@ public class SimpleElevator {
     private List<Integer> toFloor = new ArrayList<>();
     private ElevatorDirection direction = ElevatorDirection.NONDIRCTION;
     private List<ElevatorLister> listnerManager = new ArrayList<>();
+    private List<Passenger> passengerManager;
 
 
     public SimpleElevator(ElevatorLister listner) {
@@ -46,7 +48,6 @@ public class SimpleElevator {
 
 
     public void run() {
-
 
         while (hasRequest(this.fromFloor, this.toFloor)) {
 
@@ -147,7 +148,7 @@ public class SimpleElevator {
 
     public boolean hasRequest(List<Integer> fromFloor, List<Integer> toFloor) {
 
-        return fromFloor.size() > 0 || toFloor.size() > 0;
+        return fromFloor.size() > 0 || toFloor.size() > 0 ;
     }
 
     public void gotoFloor(int currentFloor, int floor) {
@@ -200,5 +201,9 @@ public class SimpleElevator {
 
     public void register(ElevatorLister listner) {
         this.listnerManager.add(listner);
+    }
+
+    public void setPassengerManager(List<Passenger> passengerManager) {
+        this.passengerManager = passengerManager;
     }
 }

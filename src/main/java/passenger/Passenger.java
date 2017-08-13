@@ -7,6 +7,7 @@ package passenger;
 public class Passenger {
 
 
+    private final int weight;
     private String name;
     private int from;
     private int to;
@@ -14,14 +15,21 @@ public class Passenger {
 
     public Passenger(int from, int to) {
 
-        this("", 1,1);
+        this("", 1, 1);
     }
 
     public Passenger(String name, int from, int to) {
 
+        this(name, from, to, 1);
+    }
+
+    public Passenger(String name, int from, int to, int weight) {
+
         this.name = name;
         this.from = from;
         this.to = to;
+        this.weight = weight;
+
     }
 
 
@@ -57,6 +65,9 @@ public class Passenger {
         return inElevator;
     }
 
+    public int getWeight() {
+        return weight;
+    }
 }
 
 

@@ -5,8 +5,8 @@ import elevator.SimpleElevator;
 import listner.ElevatorLister;
 import passenger.ElevatorManger;
 import passenger.Passenger;
+import utility.AssertUtility;
 
-import static javafx.scene.input.KeyCode.M;
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
 
@@ -15,12 +15,10 @@ import static org.junit.Assert.assertThat;
  */
 public class DSL2 {
 
-    private ElevatorLister listner = new MockListner();
-    ElevatorManger elevatorManager = new ElevatorManger( new SimpleElevator( listner ));
-
     Passenger Bob;
     Passenger Alice;
-
+    private ElevatorLister listner = new MockListner();
+    ElevatorManger elevatorManager = new ElevatorManger(new SimpleElevator(listner));
 
     public void give_Elevator_on_First_Floor() {
 
@@ -45,7 +43,7 @@ public class DSL2 {
         elevatorManager.start();
     }
 
-    public void then_Bob_Leave_Elevator_on_floor1(){
+    public void then_Bob_Leave_Elevator_on_floor1() {
 
         assertThat(elevatorManager.getLeavePerson().get(0), is(Bob));
 
@@ -54,6 +52,42 @@ public class DSL2 {
     public void then_Alice_Leave_Elevator_on_floor2() {
 
         assertThat(elevatorManager.getLeavePerson().get(1), is(Alice));
+
+    }
+
+    public void give_Elevator_with_limitation_on_120KG_on_First_Floor() {
+
+        this.elevatorManager.setFloor(1);
+        this.elevatorManager.setWeightLimitation(120);
+    }
+
+    public void give_Bob_60KG_request_Elevator_from_1_to3() {
+
+        Bob = new Passenger("Bob", 1, 3, 60);
+        Bob.requestElevator(elevatorManager);
+    }
+
+    public void give_Alice_100KG_request_Elevator_from_1_to2() {
+
+        Alice = new Passenger("Alice", 1, 2, 100);
+        Alice.requestElevator(elevatorManager);
+    }
+
+    public void then_elevator_go_throgh_Floor_1_2_3_2_1_2() {
+
+        int[] path = {1, 2, 3, 2, 1, 1, 2};
+        AssertUtility.assertPath(listner.getEventHistory(), path);
+    }
+
+    public void then_Bob_Leave_Elevator_on_floor() {
+
+        assertThat(elevatorManager.getLeavePerson().contains(Bob), is(true));
+
+    }
+
+    public void then_Alice_Leave_Elevator_on_floor() {
+
+        assertThat(elevatorManager.getLeavePerson().contains(Alice), is(true));
 
     }
 }
