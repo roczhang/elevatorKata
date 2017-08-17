@@ -1,6 +1,8 @@
 package passenger;
 
 
+import elevator.ElevatorController;
+
 /**
  * Created by I076057 on 8/9/2017.
  */

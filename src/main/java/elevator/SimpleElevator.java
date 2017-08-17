@@ -3,7 +3,6 @@ package elevator;
 import common.ElevatorDirection;
 import listner.ElevatorEvent;
 import listner.ElevatorLister;
-import passenger.ElevatorController;
 import passenger.Passenger;
 import utility.Convert;
 import utility.FindNextStopFloor;

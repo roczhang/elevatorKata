@@ -3,7 +3,7 @@ package AcceptTest.dsl;
 import MockListner.MockListner;
 import elevator.Elevator;
 import elevator.SimpleElevator;
-import passenger.ElevatorController;
+import elevator.ElevatorController;
 import passenger.Passenger;
 import utility.AssertUtility;
 

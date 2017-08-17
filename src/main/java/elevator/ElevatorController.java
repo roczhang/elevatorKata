@@ -1,9 +1,10 @@
-package passenger;
+package elevator;
 
 import common.EventInfo;
 import elevator.Elevator;
 import listner.ElevatorEvent;
 import listner.ElevatorLister;
+import passenger.Passenger;
 
 import java.util.ArrayList;
 import java.util.List;

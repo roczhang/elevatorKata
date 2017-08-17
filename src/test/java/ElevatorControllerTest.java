@@ -1,7 +1,7 @@
 import listner.ElevatorEvent;
 import org.junit.Before;
 import org.junit.Test;
-import passenger.ElevatorController;
+import elevator.ElevatorController;
 import passenger.Passenger;
 import utility.AssertUtility;
 

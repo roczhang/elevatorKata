@@ -1,7 +1,6 @@
 package elevator;
 
 import listner.ElevatorLister;
-import passenger.ElevatorController;
 import passenger.Passenger;
 
 import java.util.List;
