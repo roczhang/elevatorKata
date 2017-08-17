@@ -19,14 +19,13 @@ import java.util.stream.Collectors;
 
 public class SimpleElevator implements  Elevator {
 
-
-    private List<Integer> fromFloor = new ArrayList<>();
-    private List<Integer> toFloor = new ArrayList<>();
-
     private int currentFloor;
     private ElevatorDirection direction = ElevatorDirection.NONDIRCTION;
 
     private List<Passenger> passengerManager;
+    private List<Integer> fromFloor = new ArrayList<>();
+    private List<Integer> toFloor = new ArrayList<>();
+
     private List<ElevatorLister> listnerManager = new ArrayList<>();
 
     public SimpleElevator(ElevatorLister listner) {
@@ -215,10 +214,7 @@ public class SimpleElevator implements  Elevator {
         }
 
         this.fireEvent(ElevatorEvent.ARRIVED, currentFloor);
-
-
         this.gotoFloor(currentFloor, floor);
-
     }
 
     private void fireEvent(ElevatorEvent arrived, int floor) {
@@ -252,6 +248,5 @@ public class SimpleElevator implements  Elevator {
     public List<Integer> getToFloors() {
         return this.toFloor;
     }
-
 
 }

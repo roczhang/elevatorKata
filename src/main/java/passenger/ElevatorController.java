@@ -65,11 +65,8 @@ public class ElevatorController implements ElevatorLister {
                         passenger.enterElevator();
                         elevator.requestTo(passenger.getTo());
                     }
-
                 });
-
     }
-
 
     private void LeaveElevator(int floor) {
 
@@ -93,7 +90,6 @@ public class ElevatorController implements ElevatorLister {
 
     }
 
-
     public int size() {
         return passengerManger.size();
     }
@@ -101,7 +97,6 @@ public class ElevatorController implements ElevatorLister {
     public List<Passenger> getLeavePerson() {
         return this.leavedPassenger;
     }
-
 
     @Override
     public List<EventInfo> getEventHistory() {
